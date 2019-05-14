@@ -1,4 +1,4 @@
-x = rgb2gray(imread('Monedas/monedas4.jpg'));
+x = rgb2gray(imread('Monedas/monedas3.jpg'));
 h = fspecial('log');
 filtrada = imfilter(imfilter(x,h),h);
 binaria = imbinarize(filtrada);
@@ -37,6 +37,7 @@ for i = 1:cc.NumObjects
     tams(size(tams,1)+1-i) = m2;
 end
 monedas_detectadas = size(find(tams),1)
+hist(tams(find(tams)),30)
 
 % for i=1:size(tams,1)
 %     tams(i) = size(cc.PixelIdxList{i},1);
