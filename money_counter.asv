@@ -1,4 +1,4 @@
-x = rgb2gray(imread('Monedas/monedasEncimadas1.jpg'));
+x = rgb2gray(imread('Monedas/monedas4.jpg'));
 h = fspecial('log');
 filtrada = imfilter(imfilter(x,h),h);
 binaria = imbinarize(filtrada);
@@ -44,7 +44,7 @@ if monedas_detectadas >= 25
     a1 = 1;
     a2 = 1;
     for i=1:cc.NumObjects
-        [I, J] = ind2sub(size(y),cc.PixelIdxList{i});
+        [I, J] = ind2sub(size(y)cc.PixelIdxList{i});
         if max(I) <= mitad
             arriba{a1} = tams(i);
             arriba{a1+1} = tams(size(tams,1)+1-i);
