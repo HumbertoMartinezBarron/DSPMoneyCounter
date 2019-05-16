@@ -37,6 +37,8 @@ for i = 1:cc.NumObjects
     tams(size(tams,1)+1-i) = m2;
 end
 monedas_detectadas = size(find(tams),1)
+A1 = 0;
+A2 = 0;
 if monedas_detectadas >= 25
     mitad = size(y,1)/2;
     arriba = {};
@@ -58,11 +60,54 @@ if monedas_detectadas >= 25
     A1 = cell2mat(arriba);
     A2 = cell2mat(abajo);
     subplot(2,1,1)
-    histogram(A1(A1~=0),30)
+    histogram(A1(A1~=0),20)
     subplot(2,1,2)
-    histogram(A2(A2~=0),30)
+    histogram(A2(A2~=0),20)
 else
-    histogram(tams(tams~=0),30)
+    histogram(tams(tams~=0),23)
 end
-
-
+valores = [0.5,1,5,10];
+if A1 == 0
+    if monedas_detectadas <= 10
+        h = histcounts(tams(tams~=0),12); 
+    else
+        h = histcounts(tams(tams~=0),23);
+    end
+    monedas = zeros(4,1);
+    c = 1;
+    flag = 1;
+    for i=1:size(h,2)
+        if h(i)
+            flag = 1;
+            monedas(c) = monedas(c) + h(i);
+        else
+            if flag, c = c + 1; flag = 0; end
+        end
+    end
+    cincuenta_centavos = monedas(1)
+    un_peso = monedas(2)
+    cinco_pesos = monedas(3)
+    diez_pesos = monedas(4)
+    total = valores*monedas
+else
+    h = histcounts(A2(A2~=0),20);
+    monedas = zeros(4,1);
+    c = 1;
+    flag = 1;
+    for i=1:size(h,2)
+        if h(i)
+            flag = 1;
+            monedas(c) = monedas(c) + h(i);
+        else
+            if flag, c = c + 1; flag = 0; end
+        end
+    end
+    h = histcounts(A1(A1~=0),20);
+    m = [h(1); sum(h(6:9)); sum(h(14:16)); sum(h(17:20))];
+    monedas = monedas + m;
+    cincuenta_centavos = monedas(1)
+    un_peso = monedas(2)
+    cinco_pesos = monedas(3)
+    diez_pesos = monedas(4)
+    total = valores*monedas
+end
